@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px 16px;
+}
+
+.loginBox {
+  width: 100%;
+  max-width: 320px;
+  border: 1px solid var(--black-400);
+  padding: 24px;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.title {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input {
+  padding: 12px 16px;
+  border: 1px solid var(--black-400);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--black-600);
+  margin-top: 4px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: 4px;
+}
+
+.findLink {
+  color: var(--black-600);
+}
+
+.loginButton {
+  background-color: var(--primary-blue-200);
+  border: 1px solid var(--black-400);
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signupButton {
+  background-color: #fff;
+  border: 1px solid var(--black-400);
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.easyLogin {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.easyLogin h3 {
+  font-size: 12px;
+  color: var(--black-600);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.easyLogin h3::before,
+.easyLogin h3::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--black-400);
+  margin: 0 8px;
+}
+
+.easyLoginButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.easyLoginButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.easyLoginButton img {
+  width: 40px;
+  height: 40px;
+}

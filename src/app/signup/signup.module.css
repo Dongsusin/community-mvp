@@ -1,0 +1,82 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.postcodeWrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  button {
+    width: 110px;
+    font-size: 12px;
+    border-radius: 6px;
+    background-color: var(--bg-white);
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+  button:hover {
+    background-color: var(--black-100);
+  }
+}
+
+.label {
+  font-weight: 500;
+  margin: 12px 0 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--black-400);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--primary-blue-100);
+}
+
+.message {
+  font-size: 12px;
+  margin-top: 4px;
+  color: var(--success);
+}
+
+.message.error {
+  color: var(--error);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 14px;
+  background: var(--black-950);
+  color: var(--text-white);
+  font-size: 16px;
+  border-radius: 6px;
+  margin-top: 24px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.submitBtn:hover {
+  color: var(--primary-blue);
+}
