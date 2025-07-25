@@ -3,6 +3,10 @@
 import styles from "./signup.module.css";
 import Script from "next/script";
 import { useState } from "react";
+import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 declare global {
   interface Window {
@@ -11,7 +15,9 @@ declare global {
 }
 
 export default function Signup() {
+  const router = useRouter();
   const [id, setId] = useState("");
+  const [nickname, setNickname] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
@@ -19,7 +25,6 @@ export default function Signup() {
   const [addr, setAddr] = useState("");
   const [detailAddr, setDetailAddr] = useState("");
 
-  // 유효성 검사
   const isIdValid = id.length >= 5;
   const isPwValid = password.length >= 8 && password.length <= 16;
   const isPwMatch = password === confirmPw && confirmPw.length > 0;
@@ -33,9 +38,42 @@ export default function Signup() {
     }).open();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("가입 완료 (Firebase 연동 예정)");
+
+    if (!isIdValid || !isPwValid || !isPwMatch || !nickname.trim()) {
+      alert("입력값을 확인해주세요.");
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        `${id}@yourdomain.com`,
+        password
+      );
+      const user = userCredential.user;
+
+      await updateProfile(user, { displayName: nickname });
+
+      // firestore 저장
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        id,
+        nickname,
+        phone,
+        zipcode,
+        addr,
+        detailAddr,
+        createdAt: new Date(),
+      });
+
+      alert("회원가입 완료!");
+      window.location.href = "/";
+    } catch (error: any) {
+      console.error("회원가입 에러:", error);
+      alert("회원가입 실패: " + error.message);
+    }
   };
 
   return (
@@ -59,7 +97,13 @@ export default function Signup() {
               {isIdValid ? "사용 가능" : "5자 이상 입력해주세요"}
             </p>
           )}
-
+          <label className={styles.label}>닉네임</label>
+          <input
+            className={styles.input}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            placeholder="닉네임"
+          />
           <label className={styles.label}>휴대폰 번호</label>
           <input
             className={styles.input}
@@ -67,7 +111,6 @@ export default function Signup() {
             onChange={(e) => setPhone(e.target.value)}
             placeholder="010-1234-5678"
           />
-
           <label className={styles.label}>비밀번호 (8~16자)</label>
           <input
             type="password"
@@ -82,7 +125,6 @@ export default function Signup() {
                 : "8~16자 사이로 입력해주세요"}
             </p>
           )}
-
           <label className={styles.label}>비밀번호 확인</label>
           <input
             type="password"
@@ -97,7 +139,6 @@ export default function Signup() {
                 : "비밀번호가 일치하지 않아요"}
             </p>
           )}
-
           <div className={styles.address}>
             <label className={styles.label}>주소 정보</label>
             <div className={styles.postcodeWrap}>
@@ -128,7 +169,6 @@ export default function Signup() {
               onChange={(e) => setDetailAddr(e.target.value)}
             />
           </div>
-
           <button className={styles.submitBtn} type="submit">
             가입하기
           </button>

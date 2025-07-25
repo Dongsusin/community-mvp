@@ -1,27 +1,71 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
+  const [nickname, setNickname] = useState("");
 
   const isAuthPage = pathname === "/login" || pathname === "/signup";
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setNickname(user.displayName || user.email || "");
+      } else {
+        const kakaoUser = localStorage.getItem("kakao_user");
+        if (kakaoUser) {
+          const { nickname } = JSON.parse(kakaoUser);
+          setIsLoggedIn(true);
+          setNickname(nickname);
+        } else {
+          setIsLoggedIn(false);
+          setNickname("");
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    const kakaoUser = localStorage.getItem("kakao_user");
+
+    if (kakaoUser) {
+      if (window.Kakao && window.Kakao.Auth) {
+        window.Kakao.Auth.logout(() => {
+          console.log("카카오 로그아웃 완료");
+        });
+      }
+      localStorage.removeItem("kakao_user");
+    } else {
+      await signOut(auth);
+    }
+
+    alert("로그아웃 되었습니다.");
+    setIsLoggedIn(false);
+    setNickname("");
+    router.push("/");
+  };
 
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        {/* 좌측 공간 확보용 div */}
         <div className={styles.side} />
-
-        {/* 중앙 로고 */}
         <div className={styles.logo}>
           <Link href="/" className={styles.logoText}>
             <img
@@ -31,33 +75,37 @@ export default function Header() {
             />
           </Link>
         </div>
-
-        {/* 우측 메뉴 */}
         <div className={styles.menu}>
-          {isLoggedIn ? (
-            <>
-              <button onClick={handleLogout} className={styles.menuItem}>
-                로그아웃
-              </button>
-            </>
-          ) : (
-            <div className={styles.menulist}>
-              <Link href="" className={styles.menuItem}>
-                게시판
-              </Link>
-              <Link href="" className={styles.menuItem}>
-                마이페이지
-              </Link>
-              <Link
-                href="/login"
-                className={`${styles.menuItem} ${
-                  isAuthPage ? styles.active : ""
-                }`}
-              >
-                로그인
-              </Link>
-            </div>
-          )}
+          <div className={styles.menulist}>
+            <Link href="/board" className={styles.menuItem}>
+              게시판
+            </Link>
+
+            {isLoggedIn ? (
+              <>
+                <Link href="/mypage" className={styles.menuItem}>
+                  마이페이지
+                </Link>
+                <button onClick={handleLogout} className={styles.menuItem}>
+                  로그아웃 ({nickname})
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className={`${styles.menuItem} ${
+                    isAuthPage ? styles.active : ""
+                  }`}
+                >
+                  로그인
+                </Link>
+                <Link href="/signup" className={styles.menuItem}>
+                  회원가입
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
