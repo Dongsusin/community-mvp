@@ -1,0 +1,46 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 120px;
+}
+
+.boardContainer {
+  width: 90%;
+  max-width: 1000px;
+}
+
+.boardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.writeButton {
+  padding: 8px 14px;
+  font-size: 14px;
+  background-color: var(--primary-blue, #007bff);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.boardTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.boardTable th,
+.boardTable td {
+  border-bottom: 1px solid #ccc;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.boardTable th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}

@@ -95,12 +95,17 @@ export default function Header() {
                 <Link
                   href="/login"
                   className={`${styles.menuItem} ${
-                    isAuthPage ? styles.active : ""
+                    pathname === "/login" ? styles.active : ""
                   }`}
                 >
                   로그인
                 </Link>
-                <Link href="/signup" className={styles.menuItem}>
+                <Link
+                  href="/signup"
+                  className={`${styles.menuItem} ${
+                    pathname === "/signup" ? styles.active : ""
+                  }`}
+                >
                   회원가입
                 </Link>
               </>
