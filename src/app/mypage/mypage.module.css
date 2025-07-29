@@ -18,10 +18,10 @@
 }
 
 .row {
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 14px;
-  background-color: #f9f9f9;
+  background-color: var(--sky);
   margin-bottom: 12px;
 }
 
@@ -35,17 +35,6 @@
 .row input {
   padding: 8px;
   width: 100%;
-  border: 1px solid #aaa;
+  border: 1px solid var(--border);
   border-radius: 6px;
-}
-
-.submitBtn {
-  margin-top: 16px;
-  padding: 12px;
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
 }

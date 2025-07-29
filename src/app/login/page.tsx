@@ -66,7 +66,7 @@ export default function Login() {
 
     window.Kakao.Auth.authorize({
       redirectUri: "http://localhost:3000/kakao/callback",
-      scope: "profile_nickname",
+      scope: "profile_nickname,account_email",
     });
   };
 

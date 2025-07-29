@@ -26,10 +26,10 @@ export default function MyPage() {
       const currentUser = auth.currentUser;
 
       if (kakaoUser) {
-        const { nickname } = JSON.parse(kakaoUser);
+        const { nickname, email } = JSON.parse(kakaoUser);
         setLoginType("kakao");
         setUserData({
-          id: "카카오 계정입니다.",
+          id: email || "카카오 계정입니다.",
           nickname: nickname,
           phone: "카카오 계정입니다.",
           zipcode: "카카오 계정입니다.",
@@ -42,7 +42,7 @@ export default function MyPage() {
         if (providerId === "google.com") {
           setLoginType("google");
           setUserData({
-            id: "구글 계정입니다.",
+            id: currentUser.email || "구글 계정입니다.",
             nickname: currentUser.displayName || "구글 사용자",
             phone: "구글 계정입니다.",
             zipcode: "구글 계정입니다.",

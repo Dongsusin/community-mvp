@@ -68,49 +68,53 @@ export default function Header() {
         <div className={styles.side} />
         <div className={styles.logo}>
           <Link href="/" className={styles.logoText}>
-            <img
-              src="/header/logo.png"
-              alt="로고"
-              className={styles.logoImage}
-            />
+            커뮤니티
           </Link>
         </div>
         <div className={styles.menu}>
-          <div className={styles.menulist}>
-            <Link href="/board" className={styles.menuItem}>
-              게시판
-            </Link>
+          <Link
+            href="/"
+            className={`${styles.menuItem} ${
+              pathname === "/" ? styles.active : ""
+            }`}
+          >
+            게시판
+          </Link>
 
-            {isLoggedIn ? (
-              <>
-                <Link href="/mypage" className={styles.menuItem}>
-                  마이페이지
-                </Link>
-                <button onClick={handleLogout} className={styles.menuItem}>
-                  로그아웃 ({nickname})
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className={`${styles.menuItem} ${
-                    pathname === "/login" ? styles.active : ""
-                  }`}
-                >
-                  로그인
-                </Link>
-                <Link
-                  href="/signup"
-                  className={`${styles.menuItem} ${
-                    pathname === "/signup" ? styles.active : ""
-                  }`}
-                >
-                  회원가입
-                </Link>
-              </>
-            )}
-          </div>
+          {isLoggedIn ? (
+            <>
+              <Link
+                href="/mypage"
+                className={`${styles.menuItem} ${
+                  pathname === "/mypage" ? styles.active : ""
+                }`}
+              >
+                마이페이지
+              </Link>
+              <button onClick={handleLogout} className={styles.menuItem}>
+                로그아웃 ({nickname})
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className={`${styles.menuItem} ${
+                  pathname === "/login" ? styles.active : ""
+                }`}
+              >
+                로그인
+              </Link>
+              <Link
+                href="/signup"
+                className={`${styles.menuItem} ${
+                  pathname === "/signup" ? styles.active : ""
+                }`}
+              >
+                회원가입
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

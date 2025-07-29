@@ -25,7 +25,8 @@
 .titleInput {
   padding: 10px;
   font-size: 18px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
+  background-color: var(--sky);
   border-radius: 6px;
 }
 
@@ -33,7 +34,8 @@
   height: 300px;
   padding: 12px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
+  background-color: var(--sky);
   border-radius: 6px;
   resize: vertical;
 }
@@ -45,8 +47,8 @@
 
 .submitButton {
   padding: 10px 18px;
-  background-color: var(--primary-blue, #007bff);
-  color: white;
+  background-color: var(--blue);
+  color: var(--white);
   font-weight: bold;
   border: none;
   border-radius: 6px;

@@ -8,7 +8,7 @@
 .loginBox {
   width: 100%;
   max-width: 320px;
-  border: 1px solid var(--black-400);
+  border: 1px solid var(--border);
   padding: 24px;
   border-radius: 16px;
   background: #fff;
@@ -29,7 +29,8 @@
 
 .input {
   padding: 12px 16px;
-  border: 1px solid var(--black-400);
+  border: 1px solid var(--border);
+  background-color: var(--sky);
   border-radius: 6px;
   font-size: 14px;
 }
@@ -38,7 +39,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: var(--black-600);
+  color: var(--black);
   margin-top: 4px;
 }
 
@@ -52,12 +53,12 @@
 }
 
 .findLink {
-  color: var(--black-600);
+  color: var(--black);
 }
 
 .loginButton {
-  background-color: var(--primary-blue-200);
-  border: 1px solid var(--black-400);
+  background-color: var(--sky);
+  border: 1px solid var(--border);
   padding: 12px;
   border-radius: 6px;
   font-size: 14px;
@@ -66,8 +67,8 @@
 }
 
 .signupButton {
-  background-color: #fff;
-  border: 1px solid var(--black-400);
+  background-color: var(--white);
+  border: 1px solid var(--border);
   padding: 12px;
   border-radius: 6px;
   font-size: 14px;
@@ -81,7 +82,7 @@
 
 .easyLogin h3 {
   font-size: 12px;
-  color: var(--black-600);
+  color: var(--black);
   margin-bottom: 16px;
   display: flex;
   align-items: center;
@@ -93,7 +94,7 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: var(--black-400);
+  background: var(--black);
   margin: 0 8px;
 }
 

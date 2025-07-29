@@ -32,12 +32,9 @@
     width: 110px;
     font-size: 12px;
     border-radius: 6px;
-    background-color: var(--bg-white);
+    background-color: var(--white);
     cursor: pointer;
     transition: all 0.5s;
-  }
-  button:hover {
-    background-color: var(--black-100);
   }
 }
 
@@ -49,10 +46,10 @@
 .input {
   width: 100%;
   padding: 10px 14px;
-  border: 1px solid var(--black-400);
+  border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 14px;
-  background: var(--primary-blue-100);
+  background: var(--sky);
 }
 
 .message {
@@ -68,8 +65,8 @@
 .submitBtn {
   width: 100%;
   padding: 14px;
-  background: var(--black-950);
-  color: var(--text-white);
+  background: var(--black);
+  color: var(--white);
   font-size: 16px;
   border-radius: 6px;
   margin-top: 24px;
@@ -78,5 +75,5 @@
 }
 
 .submitBtn:hover {
-  color: var(--primary-blue);
+  color: var(--blue);
 }

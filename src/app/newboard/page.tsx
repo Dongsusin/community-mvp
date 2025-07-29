@@ -1,16 +1,65 @@
 "use client";
 
 import styles from "./Write.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db, storage, auth } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function WritePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const router = useRouter();
 
-  const handleSubmit = () => {
-    alert("작성 완료! (기능은 추후 구현)");
-    console.log("제목:", title);
-    console.log("내용:", content);
+  // 로그인 사용자 확인
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsub();
+  }, []);
+
+  const handleSubmit = async () => {
+    if (!title || !content) {
+      alert("제목과 내용을 입력해주세요.");
+      return;
+    }
+
+    const uploadedMediaUrls: string[] = [];
+
+    // 파일 업로드
+    if (files && files.length > 0) {
+      for (const file of Array.from(files)) {
+        const fileRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
+        await uploadBytes(fileRef, file);
+        const downloadURL = await getDownloadURL(fileRef);
+        uploadedMediaUrls.push(downloadURL);
+      }
+    }
+
+    const writer =
+      currentUser?.displayName || currentUser?.email?.split("@")[0] || "익명";
+
+    try {
+      await addDoc(collection(db, "posts"), {
+        title,
+        content,
+        writer,
+        date: serverTimestamp(),
+        views: 0,
+        likes: 0,
+        mediaUrls: uploadedMediaUrls,
+      });
+      alert("작성 완료!");
+      router.push("/");
+    } catch (error) {
+      console.error("문서 추가 실패:", error);
+      alert("오류 발생");
+    }
   };
 
   return (
@@ -20,12 +69,6 @@ export default function WritePage() {
           <h2>글쓰기</h2>
         </div>
 
-        <select className={styles.select}>
-          <option>게시판을 선택하세요</option>
-          <option value="general">자유 게시판</option>
-          <option value="tip">팁 공유</option>
-        </select>
-
         <input
           className={styles.titleInput}
           type="text"
@@ -34,9 +77,17 @@ export default function WritePage() {
           onChange={(e) => setTitle(e.target.value)}
         />
 
+        <input
+          type="file"
+          multiple
+          accept="image/*,video/*"
+          onChange={(e) => setFiles(e.target.files)}
+          className={styles.fileInput}
+        />
+
         <textarea
           className={styles.textarea}
-          placeholder="함께 나누고 싶은 얘기를 남겨주세요."
+          placeholder="내용을 입력해주세요"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
