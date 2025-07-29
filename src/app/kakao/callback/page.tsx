@@ -24,7 +24,7 @@ export default function KakaoCallback() {
           },
           body: new URLSearchParams({
             grant_type: "authorization_code",
-            client_id: "12c412805b751e07e4a6db43fd5256c0", // 🔑 Kakao REST API 키
+            client_id: "12c412805b751e07e4a6db43fd5256c0",
             redirect_uri: "http://localhost:3000/kakao/callback",
             code: code,
           }),
